@@ -1,18 +1,17 @@
 package com.example.capstonee;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.example.capstonee.Adapter.ViewPagerAdapter;
-import com.example.capstonee.Album.FragmentAlbum;
-import com.example.capstonee.Fragment.FragmentChat;
-import com.example.capstonee.Fragment.FragmentHome;
-import com.example.capstonee.Fragment.FragmentLocation;
-import com.example.capstonee.Fragment.FragmentSetting;
 import com.example.capstonee.Model.Login;
+import com.example.capstonee.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 요구 코드 1 && 결과 반환이 취소 -> 가입한 가족이 없고, 현재 사용자가 가족 중 최초 가입자
         if(requestCode == 1 && resultCode == RESULT_CANCELED){
             Boolean keep = (Boolean) data.getBooleanExtra("keep", false);
             if(keep){

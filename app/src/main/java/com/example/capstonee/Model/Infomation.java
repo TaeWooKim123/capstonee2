@@ -1,7 +1,5 @@
 package com.example.capstonee.Model;
 
-import android.text.format.Time;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -100,13 +98,6 @@ public class Infomation {
 
     public static String timeStamp() {
         return new SimpleDateFormat("yyyyMMHH_mmss").format(new Date());
-    }
-
-    public static String currentTime(){
-        // 시간 설정
-        Time now = new Time(Time.getCurrentTimezone());
-        now.setToNow();
-        return now.format("%y%m%d_%k%M");
     }
 
     public static String chatTimeStamp() {

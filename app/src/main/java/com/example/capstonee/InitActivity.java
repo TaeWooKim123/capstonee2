@@ -49,10 +49,6 @@ public class InitActivity extends AppCompatActivity {
                     Login.setBirth(user.getBirthDate());
                     Login.setVisit(user.getVisited());
                     Login.setFamilyID(user.getFamilyID());
-
-                    Log.d("Login1", Login.getUserID());
-                    Intent intent = new Intent(InitActivity.this, MainActivity.class);
-                    startActivity(intent);
                 }
 
                 @Override
@@ -60,7 +56,9 @@ public class InitActivity extends AppCompatActivity {
 
                 }
             });
-
+            Log.d("Login1", Login.getUserID());
+            Intent intent = new Intent(InitActivity.this, MainActivity.class);
+            startActivity(intent);
         }
         else{
             Intent intent = new Intent(InitActivity.this, SignActivity.class);

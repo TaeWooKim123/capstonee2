@@ -1,4 +1,4 @@
-package com.example.capstonee.Adapter;
+package com.example.capstonee;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.capstonee.R;
-import com.example.capstonee.ShowPhotoActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -58,7 +56,7 @@ public class RecyclerPhotoViewAdapter extends RecyclerView.Adapter<RecyclerPhoto
     public int getItemCount() {
         return mData.size();
     }
-    public void addItem(String uri) {
+    void addItem(String uri) {
         // 외부에서 item을 추가시킬 함수입니다.
         mData.add(uri);
     }

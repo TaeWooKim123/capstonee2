@@ -23,8 +23,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.capstonee.Model.ImageUpload;
-import com.example.capstonee.Model.Infomation;
-import com.example.capstonee.Model.Login;
 import com.example.capstonee.Util.ImageResizeUtils;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -160,13 +158,6 @@ public class PopupActivity extends Activity {
                                     Toast.makeText(PopupActivity.this, title, Toast.LENGTH_SHORT).show();
                                     mDatabaseRef.child(title).setValue(imageUpload);
                                     Log.v("된거야?", imageUpload.getUrl()+ " " +imageUpload.getName()+ " " +imageUpload.getFamily());
-
-                                    // 선재 코드 추가
-                                    // 문제점 : 이러면 매번 사진을 올릴 때 업데이트가 되는데 마지막에 종료 버튼 누를 때 하는게 좋지 않겠나?
-                                    // Family DB 에 사용자 ID로 역할 폴더에 사진 추가
-                                    Infomation.getDatabase("Family").child(Login.getUserID()).child(family).child(title).setValue(downloadUrl);
-                                    // User DB : 현재 사용자의 family ID를 설정
-                                    Infomation.getDatabase("User").child(Login.getUserID()).child("familyID").setValue(Login.getUserID());
                                 }
                             });
                         }

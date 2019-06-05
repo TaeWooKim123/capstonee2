@@ -19,7 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
-// 가족이랑 관계 맺기
 public class FindMyFamilyActivity extends Activity {
     EditText familyID, familyPW;
     Button noIDButton, enrollButton;
@@ -52,39 +51,25 @@ public class FindMyFamilyActivity extends Activity {
             public void onClick(View v) {
                 ID = familyID.getText().toString();
                 PW = familyPW.getText().toString();
-
-                //  사용자가 내 아이디 입력
                 if (ID.equals(Login.getUserID())) {
                     Toast.makeText(FindMyFamilyActivity.this, "자신의 ID가 아닌 가족의 ID를 입력하세요.", Toast.LENGTH_SHORT).show();
-                } else { // 정상 입력
-                    final DatabaseReference findUser = Infomation.getDatabase("User");
-                    findUser.child(ID).addListenerForSingleValueEvent(new ValueEventListener() {
+                } else {
+                    DatabaseReference findUser = Infomation.getDatabase("User");
+                    findUser.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            // 해당 ID가 존재
-                            if (dataSnapshot.exists()) {
-                                User user = dataSnapshot.getValue(User.class);
-                                // PW가 일치하지 않음
+                            if (dataSnapshot.child(ID).exists()) {
+                                User user = dataSnapshot.child(ID).getValue(User.class);
                                 if (!PW.equals(user.getPassword())) {
-                                    Toast.makeText(FindMyFamilyActivity.this, "ID / PW를 다시 입력하세요.", Toast.LENGTH_SHORT).show();
-                                } else { // PW 가 일치
-
-                                    // family ID
-                                    final String familyID = user.getFamilyID();
-
-                                    // User DB : 현재 사용자의 familyID 값을 업데이트함. - 검색한 user 와 같은 family ID 값으로
-                                    Infomation.getDatabase("User").child(Login.getUserID()).child("familyID").setValue(familyID);
-
+                                    Toast.makeText(FindMyFamilyActivity.this, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show();
+                                } else {
                                     Intent intent = new Intent();
-                                    // true 로 바꿔주면 더 이상 로그인시 팝업창이 뜨지 않음.
                                     intent.putExtra("keep", false);
                                     setResult(RESULT_OK, intent);
                                     finish();
-
                                 }
-
                             } else {
-                                Toast.makeText(FindMyFamilyActivity.this, "ID / PW를 다시 입력하세요.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(FindMyFamilyActivity.this, "없는 아이디 입니다.", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -104,6 +89,6 @@ public class FindMyFamilyActivity extends Activity {
     }
 
     @Override
-    public void onBackPressed() { //뒤로가기 못하게
+    public void onBackPressed(){ //뒤로가기 못하게
     }
 }

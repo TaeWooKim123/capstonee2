@@ -1,4 +1,4 @@
-package com.example.capstonee.Fragment;
+package com.example.capstonee;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.capstonee.R;
 
 public class FragmentLocation extends Fragment {
     View v;
