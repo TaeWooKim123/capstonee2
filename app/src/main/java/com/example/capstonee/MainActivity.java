@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         //프래그먼트를 여기에 추가
-
         adapter.AddFragment(new FragmentHome(), "");
         adapter.AddFragment(new FragmentAlbum(), "");
         adapter.AddFragment(new FragmentChat(), "");

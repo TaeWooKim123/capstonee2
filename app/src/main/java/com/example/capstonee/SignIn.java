@@ -23,6 +23,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 public class SignIn extends AppCompatActivity {
+    //캡차를 위한 변수들
+    static int correctNumber;
+    static boolean loginStop = false;
+    static long failureTime;
+    long retryTime;
+
     EditText logId, logPassword;
     CheckBox edtCheck;
     Button btnSignIn;
@@ -58,28 +64,70 @@ public class SignIn extends AppCompatActivity {
                             //아이디 있음?
                             User user = dataSnapshot.child(ID).getValue(User.class);
                             if(Password.equals(user.getPassword())){
-                                //비밀번호 일치?
-                                if(edtCheck.isChecked()){
-                                    //자동로그인 할거임?
-                                    SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = pref.edit();
-                                    editor.putString("userID", ID);
-                                    editor.putString("userPassword", Password);
-                                    editor.apply();
+                                if(loginStop == true && correctNumber == -1) {
+                                    retryTime = System.currentTimeMillis();
+                                    //long failuretime = (long)Long.parseLong(failureTime);
+                                    //long retrytime = (long)Long.parseLong(retryTime);
+                                    Log.d("실패시간 : ", Long.toString(failureTime));
+                                    Log.d("재시도시간 : ", Long.toString(retryTime));
+                                    long time = (long) ((retryTime - failureTime) / 1000.0);
+                                    if (time > 30) {
+                                        loginStop = false;
+                                        correctNumber = 0;
+                                    } else {
+                                        String msg = String.format("%d초 후에 다시 시도하세요.", 30 - (time));
+                                        Toast.makeText(SignIn.this, msg, Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                Toast.makeText(SignIn.this, user.getName()+"님 환영합니다!!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SignIn.this, MainActivity.class);
-                                Login.setID(ID);
-                                Login.setName(user.getName());
-                                Login.setPassword(Password);
-                                Login.setPhone(user.getPhone());
-                                Login.setBirth(user.getBirthDate());
-                                Login.setVisit(user.getVisited());
-                                Login.setFamilyID(user.getFamilyID());
-                                startActivity(intent);
+                                else { //비밀번호 일치?
+                                    if(edtCheck.isChecked()){
+                                        //자동로그인 할거임?
+                                        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = pref.edit();
+                                        editor.putString("userID", ID);
+                                        editor.putString("userPassword", Password);
+                                        editor.apply();
+                                    }
+                                    Toast.makeText(SignIn.this, user.getName()+"님 환영합니다!!", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(SignIn.this, MainActivity.class);
+                                    Login.setID(ID);
+                                    Login.setName(user.getName());
+                                    Login.setPassword(Password);
+                                    Login.setPhone(user.getPhone());
+                                    Login.setBirth(user.getBirthDate());
+                                    Login.setVisit(user.getVisited());
+                                    Login.setFamilyID(user.getFamilyID());
+                                    startActivity(intent);
+                                }
                             }
                             else{
-                                Toast.makeText(SignIn.this, "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                                if(loginStop == true && correctNumber == -1){
+                                    retryTime = System.currentTimeMillis();
+                                    //long failuretime = (long)Long.parseLong(failureTime);
+                                    //long retrytime = (long)Long.parseLong(retryTime);
+                                    Log.d("실패시간 : ", Long.toString(failureTime));
+                                    Log.d("재시도시간 : ", Long.toString(retryTime));
+                                    long time = (long) ((retryTime-failureTime)/1000.0);
+                                    if(time > 30) {
+                                        loginStop=false;
+                                        correctNumber =0;
+                                    }else{
+                                        String msg = String.format("%d초 후에 다시 시도하세요.", 30-(time));
+                                        Toast.makeText(SignIn.this, msg, Toast.LENGTH_SHORT).show();
+                                    }
+                                }else{
+                                    correctNumber++;
+                                    String msg = String.format("비밀번호가 틀렸습니다.\n%d회. 3회 실패시 인증 확인", correctNumber);
+                                    if (correctNumber == 1 || correctNumber == 2)
+                                        Toast.makeText(SignIn.this, msg, Toast.LENGTH_SHORT).show();
+
+                                    if (correctNumber == 3) {
+                                        //캡차 띄우기.
+                                        Toast.makeText(SignIn.this, "자동로그인 방지를 위해 인증화면으로 이동합니다.", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(SignIn.this, CapchaTwActivity.class);
+                                        startActivity(intent);
+                                    }
+                                }
                             }
                         }else{
                             //아이디 없음

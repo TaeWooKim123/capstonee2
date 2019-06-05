@@ -22,17 +22,6 @@ import java.net.URLConnection;
 
 public class GPS extends AppCompatActivity {
 
-
-//    // Thread 안에서의 변수는 handler를 통해 전달한다.
-//    Handler handler = new Handler() {
-//        public void handleMessage(Message msg) {
-//            Log.e("Handler", locationValue);
-//            // 왔다.
-//            Bundle bun = msg.getData();
-//            locationValue = bun.getString("location");
-//        }
-//    };
-
     public static String getAdrress(double latitude, double longitude){
         try {
             return getRegionAddress(getJSONData(getApiAddress(latitude, longitude)));

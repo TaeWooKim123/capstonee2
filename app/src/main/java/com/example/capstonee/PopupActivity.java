@@ -56,6 +56,7 @@ public class PopupActivity extends Activity {
     public static final String FB_STORAGE_PATH = "image/";
     public static final String FB_DATABASE_PATH = "image";
     public static final int POP_RESULT = 9876;
+    private String serverURL = "http://35.190.234.226:8080/twinvest/hellotw/firsttw.jsp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,4 +11,21 @@
     <string name="login_failed">"Login failed"</string>
     <string name="permission_1">[설정] > [권한] 에서 권한을 허용할 수 있습니다.</string>
     <string name="permission_2">사진 및 파일을 저장하기 위하여 접근 권한이 필요합니다.</string>
+    <string name="home_screen_text">To initiate reCAPTHA tap on the FAB.</string>
+    <string name="status_network_issue">연결 실패ㅠㅠ</string>
+    <string name="alert">경고</string>
+    <string name="no_network">기기가 인터넷 연결에 실패했습니다.</string>
+    <string name="action_about">About 앱!</string>
+    <string name="about">About App</string>
+    <string name="about_app">모던패밀리 :)</string>
+    <string name="success_message">재로그인해보세요.</string>
+    <string name="failure_message">봇인가요?</string>
+    <string name="token_verification_success">토큰을 성공적으로 갖고왔습니다.</string>
+    <string name="token_verification_failed">토큰을 가지고 오는데 실패했습니다.</string>
+    <string name="success">성공!</string>
+    <string name="error">에러</string>
+
+    <string name="vertify_access">확인완료! 시간은 %d 밀리 초</string>
+    <string name="vertify_failed">인증실패! %d번 남았습니다.</string>
+
 </resources>

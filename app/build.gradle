@@ -53,5 +53,15 @@ dependencies {
 
     //JSON
     implementation files('libs/json-simple-1.1.1.jar')
+
+    //구글캡차
+    implementation 'com.google.android.gms:play-services-safetynet:16.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.3.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.airbnb.android:lottie:2.7.0'
+    implementation 'com.facebook.rebound:rebound:0.3.8'
+    implementation 'com.tapadoo.android:alerter:2.0.0'
+
+
 }
 apply plugin: 'com.google.gms.google-services'
